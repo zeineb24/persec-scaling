@@ -4,6 +4,16 @@ import PIL
 from PIL import Image
 import cv2 as cv
 import sys
+import numpy as np
+import PIL
+from PIL import Image
+import cv2 as cv
+import sys
+
+# Compat shim: newer Pillow renamed Image.LINEAR -> Image.BILINEAR (and CUBIC, etc.)
+for _old, _new in [("LINEAR","BILINEAR"), ("CUBIC","BICUBIC"), ("ANTIALIAS","LANCZOS")]:
+    if not hasattr(Image, _old) and hasattr(Image, _new):
+        setattr(Image, _old, getattr(Image, _new))
 
 
 def scale_pillow(xin, trows, tcols, alg=Image.LINEAR):
